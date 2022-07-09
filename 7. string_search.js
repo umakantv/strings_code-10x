@@ -33,6 +33,34 @@ function searchIndices (text, phrase) {
     let n = text.length;
     let m = phrase.length;
 
+    let phrase_sum = 0;
+    for (let i = 0; i < m; i++) {
+        phrase_sum += phrase.charCodeAt(i);
+    }
+
+    console.log("Phase Sum", phrase_sum);
+
+    let sum = 0;
+    for (let i = 0; i < n; i++) {
+        sum += text.charCodeAt(i);
+
+        if (i >= m) {
+            sum -= text.charCodeAt(i - m);
+        }
+
+        if (sum === phrase_sum) {
+            let start_position = i - m + 1;
+            
+            // check for exact match
+            
+            let candidate = text.substring(start_position, i + 1);
+            console.log("Candidate found at position", start_position, candidate);
+
+            if (candidate === phrase) {
+                indices.push(start_position);
+            }
+        }
+    }
 
     return indices;
 
